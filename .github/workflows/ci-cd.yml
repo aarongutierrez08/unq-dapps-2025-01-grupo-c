@@ -37,4 +37,4 @@ jobs:
 
     steps:
       - name: Trigger Deploy in Render
-        run: curl -X POST https://api.render.com/deploy/srv-cvu018h5pdvs73e2ds3g?key=cu8gLO4l4gI
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
