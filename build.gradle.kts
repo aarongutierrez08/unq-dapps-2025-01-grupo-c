@@ -14,6 +14,10 @@ java {
 	}
 }
 
+kotlin {
+	jvmToolchain(21)
+}
+
 repositories {
 	mavenCentral()
 }
