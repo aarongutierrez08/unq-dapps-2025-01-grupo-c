@@ -3,6 +3,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.25"
 	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.7"
+	id("org.sonarqube") version "6.0.1.5171"
 }
 
 group = "com.example"
@@ -45,4 +46,12 @@ kotlin {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+sonar {
+	properties {
+		property("sonar.projectKey", "aarongutierrez08_unq-dapps-2025-01-grupo-c")
+		property("sonar.organization", "aarongutierrez08")
+		property("sonar.host.url", "https://sonarcloud.io")
+	}
 }
