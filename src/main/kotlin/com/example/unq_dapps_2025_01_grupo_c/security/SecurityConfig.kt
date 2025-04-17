@@ -14,7 +14,14 @@ class SecurityConfig(private val jwtFilter: JwtFilter) {
         http
             .csrf { it.disable() }
             .authorizeHttpRequests {
-                it.requestMatchers("/login", "/").permitAll()
+                it.requestMatchers(
+                    "/",
+                    "/login",
+                    "/players",
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
+                ).permitAll()
                 it.anyRequest().authenticated()
             }
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
