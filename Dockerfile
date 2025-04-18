@@ -15,10 +15,10 @@ RUN yum update -y && \
     yum install -y ./google-chrome-stable_current_x86_64.rpm && \
     rm google-chrome-stable_current_x86_64.rpm && \
     wget https://storage.googleapis.com/chrome-for-testing-public/135.0.7049.84/linux64/chromedriver-linux64.zip && \
-    unzip chromedriver_linux64.zip && \
-    mv chromedriver /usr/bin/chromedriver && \
+    unzip chromedriver-linux64.zip && \
+    mv chromedriver-linux64/chromedriver /usr/bin/chromedriver && \
     chmod +x /usr/bin/chromedriver && \
-    rm chromedriver_linux64.zip
+    rm -rf chromedriver-linux64 chromedriver_linux64.zip
 
 # Variables de entorno para Selenium
 ENV CHROME_BIN="/usr/bin/google-chrome"
