@@ -29,7 +29,7 @@ class WhoScoredScraperService {
 
         try {
             driver.get("$baseUrl/regions/11/tournaments/68/seasons/10573/argentina-liga-profesional")
-            val wait = WebDriverWait(driver, Duration.ofSeconds(15))
+            val wait = WebDriverWait(driver, Duration.ofSeconds(120))
 
             wait.until(ExpectedConditions.presenceOfElementLocated(By.className("standings")))
             val teamsTable = driver.findElement(By.className("standings"))
