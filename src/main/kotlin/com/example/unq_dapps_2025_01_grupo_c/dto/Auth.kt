@@ -6,5 +6,6 @@ data class AuthRequest(
 )
 
 data class AuthResponse(
-    val message: String
+    val message: String,
+    val error: String? = null
 )

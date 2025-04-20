@@ -20,7 +20,8 @@ class SecurityConfig(private val jwtFilter: JwtAuthFilter) {
                     "/auth/**",
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
-                    "/swagger-ui.html"
+                    "/swagger-ui.html",
+                    "/players"
                 ).permitAll()
                 it.anyRequest().authenticated()
             }
