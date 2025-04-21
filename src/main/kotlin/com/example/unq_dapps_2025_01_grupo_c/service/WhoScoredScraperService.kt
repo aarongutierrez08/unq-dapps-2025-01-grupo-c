@@ -1,5 +1,6 @@
 package com.example.unq_dapps_2025_01_grupo_c.service
 
+import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
 import org.openqa.selenium.By
 import org.openqa.selenium.PageLoadStrategy
 import org.openqa.selenium.WebDriver
@@ -20,30 +21,46 @@ class WhoScoredScraperService {
             addArguments("--disable-dev-shm-usage")
             addArguments("--disable-gpu")
             addArguments("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
-            //setBinary(System.getenv("CHROME_BIN") ?: "/usr/bin/google-chrome")
             setPageLoadStrategy(PageLoadStrategy.NORMAL)
         }
-
+        if (teamName.isBlank()) {
+            return listOf("ERROR: The team name cannot be empty")
+        }
         val driver: WebDriver = ChromeDriver(options)
         val baseUrl = "https://es.whoscored.com"
+        println("Buscando equipo: $teamName")
 
         try {
             driver.get("$baseUrl/regions/11/tournaments/68/seasons/10573/argentina-liga-profesional")
-            val wait = WebDriverWait(driver, Duration.ofSeconds(120))
+            val wait = WebDriverWait(driver, Duration.ofSeconds(180))
 
             wait.until(ExpectedConditions.presenceOfElementLocated(By.className("standings")))
-            val teamsTable = driver.findElement(By.className("standings"))
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("team-link")))
-            val links = teamsTable.findElements(By.className("team-link"))
 
-            val targetLink = links.firstOrNull { it.text.equals(teamName, true) || it.text.contains(teamName, true) }
-                ?.getAttribute("href") ?: throw RuntimeException("Team $teamName not found")
+            val links = driver.findElements(By.className("team-link"))
+
+            val teamInfoList = links.map {
+                val text = it.text.trim()
+                val href = it.getAttribute("href")
+                val nameFromHref = href?.split("/")?.last()?.replace("-", " ")?.replaceFirstChar { c -> c.uppercase() } ?: ""
+                //println("Link: ${it.getAttribute("outerHTML")}")
+                //println("Texto: '$text' | Extraído desde href: '$nameFromHref'")
+                text.ifBlank { nameFromHref } to href
+            }
+
+            val matched = teamInfoList.firstOrNull { (name, _) ->
+                name.equals(teamName, ignoreCase = true) || name.contains(teamName, ignoreCase = true)
+            } ?: throw TeamNotFoundException("Team $teamName not found")
+
+            val targetLink = matched.second
+            if (targetLink.isNullOrBlank()) throw RuntimeException("No se encontró un link válido para el equipo $teamName")
 
             driver.get(targetLink)
             wait.until(ExpectedConditions.presenceOfElementLocated(By.id("player-table-statistics-body")))
-            val playersTable = driver.findElement(By.id("player-table-statistics-body"))
 
+            val playersTable = driver.findElement(By.id("player-table-statistics-body"))
             wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("iconize")))
+
             return playersTable.findElements(By.className("iconize"))
                 .mapNotNull { it.text.takeIf { txt -> txt.isNotBlank() } }
 
