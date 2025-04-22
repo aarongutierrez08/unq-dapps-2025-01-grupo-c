@@ -17,4 +17,3 @@ class WhoScoredScraperController(
         return whoScoredScraperService.fetchPlayers(request.team)
     }
 }
-
