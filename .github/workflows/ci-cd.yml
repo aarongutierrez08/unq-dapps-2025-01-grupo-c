@@ -11,14 +11,13 @@ jobs:
 
     services:
       postgres:
-        image: postgres:14
+        image: postgres
         ports:
           - 5432:5432
         env:
-          DB: ${{ secrets.DB }}
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
+          POSTGRES_DB: dapps
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
