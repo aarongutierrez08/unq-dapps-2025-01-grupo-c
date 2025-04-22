@@ -8,7 +8,10 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
-class SecurityConfig(private val jwtFilter: JwtAuthFilter) {
+class SecurityConfig(
+    private val jwtFilter: JwtAuthFilter,
+    private val authEntryPoint: JwtAuthenticationEntryPoint
+) {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain =
@@ -20,10 +23,12 @@ class SecurityConfig(private val jwtFilter: JwtAuthFilter) {
                     "/auth/**",
                     "/v3/api-docs/**",
                     "/swagger-ui/**",
-                    "/swagger-ui.html",
-                    "/players"
+                    "/swagger-ui.html"
                 ).permitAll()
                 it.anyRequest().authenticated()
+            }
+            .exceptionHandling {
+                it.authenticationEntryPoint(authEntryPoint)
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
