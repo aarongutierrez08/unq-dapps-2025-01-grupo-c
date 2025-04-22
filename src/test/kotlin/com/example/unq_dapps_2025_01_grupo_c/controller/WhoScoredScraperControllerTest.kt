@@ -1,7 +1,7 @@
 package com.example.unq_dapps_2025_01_grupo_c.controller
 
 import com.example.unq_dapps_2025_01_grupo_c.dto.PlayerRequest
-import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
+import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
 import com.example.unq_dapps_2025_01_grupo_c.security.JwtUtil
 import com.example.unq_dapps_2025_01_grupo_c.model.User
 import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
@@ -87,7 +87,7 @@ class WhoScoredScraperControllerTest {
         val response = restTemplate.postForEntity(
             "http://localhost:$port/players",
             entity,
-            TeamNotFoundException::class.java
+            ApiErrorResponse::class.java
         )
 
         assertEquals(HttpStatus.NOT_FOUND, response.statusCode)

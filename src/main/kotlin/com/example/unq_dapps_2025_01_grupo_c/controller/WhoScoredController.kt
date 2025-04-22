@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class WhoScoredScraperController(
-    private val scraperService: WhoScoredScraperService
+    private val whoScoredScraperService: WhoScoredScraperService
 ) {
 
     @PostMapping("/players")
     fun getPlayers(@Valid @RequestBody request: PlayerRequest): List<String> {
-        return scraperService.fetchPlayers(request.team)
+        return whoScoredScraperService.fetchPlayers(request.team)
     }
 }
 
