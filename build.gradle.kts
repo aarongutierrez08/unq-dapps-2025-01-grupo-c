@@ -43,8 +43,10 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql")
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
+tasks.test {
+	useJUnitPlatform {
+		excludeTags("scrapping")
+	}
 }
 
 sonar {
