@@ -1,5 +1,7 @@
 package com.example.unq_dapps_2025_01_grupo_c.service
 
+import com.example.unq_dapps_2025_01_grupo_c.exceptions.PlayersNotFoundException
+import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
 import org.openqa.selenium.By
 import org.openqa.selenium.PageLoadStrategy
 import org.openqa.selenium.WebDriver
@@ -13,45 +15,49 @@ import java.time.Duration
 @Service
 class WhoScoredScraperService {
 
-    fun fetchPlayers(teamName: String): List<String> {
+    fun createDriver(): WebDriver {
         val options = ChromeOptions().apply {
-            addArguments("--headless=new")
-            addArguments("--no-sandbox")
-            addArguments("--disable-dev-shm-usage")
-            addArguments("--disable-gpu")
-            addArguments("--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
-            setBinary(System.getenv("CHROME_BIN") ?: "/usr/bin/google-chrome")
+            addArguments(
+                "--headless=new",
+                "--no-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
+            )
             setPageLoadStrategy(PageLoadStrategy.NORMAL)
+//            setBinary(System.getenv("CHROME_BIN") ?: "/usr/bin/google-chrome")
         }
+        return ChromeDriver(options)
+    }
 
-        val driver: WebDriver = ChromeDriver(options)
+    fun fetchPlayers(teamName: String): List<String> {
+        val driver: WebDriver = createDriver()
         val baseUrl = "https://es.whoscored.com"
 
-        try {
-            driver.get("$baseUrl/regions/11/tournaments/68/seasons/10573/argentina-liga-profesional")
-            val wait = WebDriverWait(driver, Duration.ofSeconds(120))
+        driver.get("$baseUrl/regions/11/tournaments/68/seasons/10573/argentina-liga-profesional")
+        val wait = WebDriverWait(driver, Duration.ofSeconds(120))
 
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.className("standings")))
-            val teamsTable = driver.findElement(By.className("standings"))
-            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("team-link")))
-            val links = teamsTable.findElements(By.className("team-link"))
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("standings")))
+        val teamsTable = driver.findElement(By.className("standings"))
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("team-link")))
+        val links = teamsTable.findElements(By.className("team-link"))
 
-            val targetLink = links.firstOrNull { it.text.equals(teamName, true) || it.text.contains(teamName, true) }
-                ?.getAttribute("href") ?: throw RuntimeException("Team $teamName not found")
+        val targetLink = links.firstOrNull { it.text.equals(teamName, true) || it.text.contains(teamName, true) }
+            ?.getAttribute("href") ?: throw TeamNotFoundException(teamName)
 
-            driver.get(targetLink)
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("player-table-statistics-body")))
-            val playersTable = driver.findElement(By.id("player-table-statistics-body"))
+        driver.get(targetLink)
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("player-table-statistics-body")))
+        val playersTable = driver.findElement(By.id("player-table-statistics-body"))
 
-            wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("iconize")))
-            return playersTable.findElements(By.className("iconize"))
-                .mapNotNull { it.text.takeIf { txt -> txt.isNotBlank() } }
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("iconize")))
 
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return listOf("ERROR: ${e.message}")
-        } finally {
-            driver.quit()
-        }
+        val teamPlayers = playersTable.findElements(By.className("iconize"))
+            .mapNotNull { it.text.takeIf { txt -> txt.isNotBlank() } }
+
+        if (teamPlayers.isEmpty()) throw PlayersNotFoundException("Players of $teamName not found")
+
+        driver.quit()
+
+        return teamPlayers
     }
 }

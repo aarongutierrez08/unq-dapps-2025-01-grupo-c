@@ -8,7 +8,6 @@ RUN ./gradlew build --no-daemon
 # Etapa 2: Run
 FROM amazoncorretto:21
 
-# Instala dependencias necesarias para Chrome y ChromeDriver (para Debian/Ubuntu)
 RUN yum update -y && \
     yum install -y wget unzip libX11 && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
