@@ -15,12 +15,11 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
 
-@Tag("scrapping")
 @ActiveProfiles("test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class WhoScoredScraperControllerTest {
+class TeamControllerTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -44,11 +43,12 @@ class WhoScoredScraperControllerTest {
         token = jwtUtil.generateToken("testuser")
     }
 
+    @Tag("scrapping")
     @Test
     fun `should return players when authorized`() {
         val request = PlayerRequest(team = "Boca Juniors")
 
-        mockMvc.post("/players") {
+        mockMvc.post("/team/players") {
             contentType = MediaType.APPLICATION_JSON
             header("Authorization", "Bearer $token")
             content = objectMapper.writeValueAsString(request)
@@ -58,11 +58,12 @@ class WhoScoredScraperControllerTest {
         }
     }
 
+    @Tag("scrapping")
     @Test
     fun `should return 404 when team is invalid`() {
         val request = PlayerRequest(team = "InvalidTeam")
 
-        mockMvc.post("/players") {
+        mockMvc.post("/team/players") {
             contentType = MediaType.APPLICATION_JSON
             header("Authorization", "Bearer $token")
             content = objectMapper.writeValueAsString(request)
@@ -72,11 +73,12 @@ class WhoScoredScraperControllerTest {
         }
     }
 
+    @Tag("scrapping")
     @Test
     fun `should return 401 when token is missing`() {
         val request = PlayerRequest(team = "Boca Juniors")
 
-        mockMvc.post("/players") {
+        mockMvc.post("/team/players") {
             contentType = MediaType.APPLICATION_JSON
             content = objectMapper.writeValueAsString(request)
         }.andExpect {

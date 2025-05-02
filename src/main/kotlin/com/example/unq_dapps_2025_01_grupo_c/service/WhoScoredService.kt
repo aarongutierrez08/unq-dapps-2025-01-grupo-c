@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 import java.time.Duration
 
 @Service
-class WhoScoredScraperService {
+class WhoScoredService {
 
     fun createDriver(): WebDriver {
         val options = ChromeOptions().apply {
