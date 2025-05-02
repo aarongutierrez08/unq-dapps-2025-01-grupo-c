@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension
+import org.springframework.test.context.ActiveProfiles
 
 @Tag("scrapping")
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension::class)
-class WhoScoredScraperServiceTest {
+class WhoScoredServiceTest {
 
-    private val whoScoredScraperService = WhoScoredScraperService()
+    private val whoScoredScraperService = WhoScoredService()
 
     @Test
     fun `fetchPlayers should return a list of players when team is found`() {
