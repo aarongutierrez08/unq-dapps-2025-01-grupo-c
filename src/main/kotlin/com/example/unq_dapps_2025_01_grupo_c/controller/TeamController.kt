@@ -1,7 +1,7 @@
 package com.example.unq_dapps_2025_01_grupo_c.controller
 
-import Match
 import com.example.unq_dapps_2025_01_grupo_c.dto.PlayerRequest
+import com.example.unq_dapps_2025_01_grupo_c.dto.api.Match
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
 import com.example.unq_dapps_2025_01_grupo_c.service.FootballDataService
 import com.example.unq_dapps_2025_01_grupo_c.service.WhoScoredService

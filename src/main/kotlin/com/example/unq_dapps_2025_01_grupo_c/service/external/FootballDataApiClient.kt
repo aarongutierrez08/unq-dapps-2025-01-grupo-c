@@ -1,10 +1,6 @@
 package com.example.unq_dapps_2025_01_grupo_c.service.external
 
-import CompetitionInfo
-import Match
-import Team
-import TeamMatchesResponse
-import TeamsApiResponse
+import com.example.unq_dapps_2025_01_grupo_c.dto.api.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
@@ -33,7 +29,7 @@ class FootballDataApiClient(
             ?: emptyList()
     }
 
-    fun getCompetitionTeams(competitionId: Int): Map<String, Int> {
+    fun getCompetitionTeams(competitionId: Int): List<Team>? {
         val webClient = webClientBuilder.baseUrl(baseUrl).build()
 
         return webClient.get()
@@ -43,8 +39,6 @@ class FootballDataApiClient(
             .bodyToMono<TeamsApiResponse>()
             .block()
             ?.teams
-            ?.associate { it.shortName.lowercase() to it.id }
-            ?: emptyMap()
     }
 }
 
@@ -58,7 +52,7 @@ private fun Match.toDomainModel(): Match {
             id = this.homeTeam.id,
             name = this.homeTeam.name,
             shortName = this.homeTeam.shortName,
-            tla = this.homeTeam.tla
+            tla = this.homeTeam.tla,
         ),
         awayTeam = Team(
             id = this.awayTeam.id,

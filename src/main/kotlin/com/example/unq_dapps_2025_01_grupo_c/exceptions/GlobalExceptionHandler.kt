@@ -34,6 +34,14 @@ class GlobalExceptionHandler {
         return buildErrorResponse(ex.message, HttpStatus.NOT_FOUND, request)
     }
 
+    @ExceptionHandler(PlayerNotFoundException::class)
+    fun handleTeamNotFound(
+        ex: PlayerNotFoundException,
+        request: HttpServletRequest
+    ): ResponseEntity<ApiErrorResponse> {
+        return buildErrorResponse(ex.message, HttpStatus.NOT_FOUND, request)
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidation(
         ex: MethodArgumentNotValidException,
