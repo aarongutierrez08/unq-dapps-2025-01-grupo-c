@@ -2,13 +2,14 @@ package com.example.unq_dapps_2025_01_grupo_c.service
 
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension
 import org.springframework.test.context.ActiveProfiles
 
-//@Tag("scrapping")
+@Tag("scrapping")
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension::class)
 class WhoScoredServiceTest {
