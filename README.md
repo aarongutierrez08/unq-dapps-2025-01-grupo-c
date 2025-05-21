@@ -21,16 +21,16 @@
 ##Demo 2:
 
 ###Core
-- [] Estado de build en "Verde"
+- [ ] Estado de build en "Verde"
 - [x] Utilizar HSQLDB para persistir datos (opcion H2)
-- [] Crear datos de prueba cuando levanta la aplicación
+- [ ] Crear datos de prueba cuando levanta la aplicación
 - [x] Documentation de Endpoints (APIs) con Swagger (v3)
-- [] Separar profiles de testing para unitarios y e2e
+- [ ] Separar profiles de testing para unitarios y e2e
 - [x] Implementar JOB de Coverage
 
 ###Funcionalidad
 - [x] Endpoint de próximos partidos de un equipo
-- [] Endpoint de historial de consultas
-- [] Endpoint de rendimiento de jugador
-- [] Endpoint de predicción de partido
+- [ ] Endpoint de historial de consultas
+- [ ] Endpoint de rendimiento de jugador
+- [ ] Endpoint de predicción de partido
 
