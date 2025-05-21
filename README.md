@@ -1,6 +1,6 @@
-##Demo 1:
+## Demo 1:
 
-###Core
+### Core
 - [x] Creación de repositorios GitHub
 - [x] Configuración en GitHubActions
 - [x] Build corriendo y SUCCESS
@@ -10,17 +10,17 @@
 - [x] JWT implementado
 - [x] Configuracion de https://swagger.io/ en el back-API (v3)
 
-###Modelo
+### Modelo
 - [x] Modelo segun necesidad de endpoints
 - [x] Testing automático unitario según las pautas de la materia
 
-###Funcionalidad
+### Funcionalidad
 - [x] Creacion de usuario y ApiKEY para acceder al resto de los endpoints
 - [x] Endpoint de jugadores de un equipo
 
-##Demo 2:
+## Demo 2:
 
-###Core
+### Core
 - [ ] Estado de build en "Verde"
 - [x] Utilizar HSQLDB para persistir datos (opcion H2)
 - [ ] Crear datos de prueba cuando levanta la aplicación
@@ -28,7 +28,7 @@
 - [ ] Separar profiles de testing para unitarios y e2e
 - [x] Implementar JOB de Coverage
 
-###Funcionalidad
+### Funcionalidad
 - [x] Endpoint de próximos partidos de un equipo
 - [ ] Endpoint de historial de consultas
 - [ ] Endpoint de rendimiento de jugador
