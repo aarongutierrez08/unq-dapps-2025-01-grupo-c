@@ -46,7 +46,7 @@ class TeamControllerTest {
     @Tag("scrapping")
     @Test
     fun `should return players when authorized`() {
-        val request = PlayerRequest(team = "Boca Juniors")
+        val request = PlayerRequest(team = "Liverpool")
 
         mockMvc.post("/team/players") {
             contentType = MediaType.APPLICATION_JSON
@@ -76,7 +76,7 @@ class TeamControllerTest {
     @Tag("scrapping")
     @Test
     fun `should return 401 when token is missing`() {
-        val request = PlayerRequest(team = "Boca Juniors")
+        val request = PlayerRequest(team = "Liverpool")
 
         mockMvc.post("/team/players") {
             contentType = MediaType.APPLICATION_JSON
