@@ -38,7 +38,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
-	testImplementation("org.hsqldb:hsqldb")
+	testImplementation("org.hsqldb:hsqldb:2.7.4")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
