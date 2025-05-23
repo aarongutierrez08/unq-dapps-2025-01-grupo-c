@@ -1,3 +1,20 @@
+## Demo 2:
+
+### Core
+- [ ] Estado de build en "Verde"
+- [x] Utilizar HSQLDB para persistir datos (opcion H2)
+- [x] Crear datos de prueba cuando levanta la aplicación
+- [x] Documentation de Endpoints (APIs) con Swagger (v3)
+- [x] Separar profiles de testing para unitarios y e2e
+- [x] Implementar JOB de Coverage
+
+### Funcionalidad
+- [x] Endpoint de próximos partidos de un equipo
+- [ ] Endpoint de historial de consultas
+- [x] Endpoint de rendimiento de jugador
+- [ ] Endpoint de predicción de partido
+
+------------------------------------------------------------
 ## Demo 1:
 
 ### Core
@@ -17,20 +34,3 @@
 ### Funcionalidad
 - [x] Creacion de usuario y ApiKEY para acceder al resto de los endpoints
 - [x] Endpoint de jugadores de un equipo
-
-## Demo 2:
-
-### Core
-- [ ] Estado de build en "Verde"
-- [x] Utilizar HSQLDB para persistir datos (opcion H2)
-- [ ] Crear datos de prueba cuando levanta la aplicación
-- [x] Documentation de Endpoints (APIs) con Swagger (v3)
-- [ ] Separar profiles de testing para unitarios y e2e
-- [x] Implementar JOB de Coverage
-
-### Funcionalidad
-- [x] Endpoint de próximos partidos de un equipo
-- [ ] Endpoint de historial de consultas
-- [ ] Endpoint de rendimiento de jugador
-- [ ] Endpoint de predicción de partido
-
