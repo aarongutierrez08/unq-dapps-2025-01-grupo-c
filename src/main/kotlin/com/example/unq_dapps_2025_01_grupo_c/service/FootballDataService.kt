@@ -1,6 +1,8 @@
 package com.example.unq_dapps_2025_01_grupo_c.service
 
-import Match
+import com.example.unq_dapps_2025_01_grupo_c.dto.api.Match
+import com.example.unq_dapps_2025_01_grupo_c.dto.api.Team
+import com.example.unq_dapps_2025_01_grupo_c.exceptions.PlayerNotFoundException
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
 import com.example.unq_dapps_2025_01_grupo_c.service.external.FootballDataApiClient
 import org.springframework.cache.annotation.Cacheable
@@ -12,17 +14,21 @@ class FootballDataService(
 ) {
     private val premierLeagueId = 2021
 
-    @Cacheable("premierLeagueTeams")
-    fun getPremierLeagueTeams(): Map<String, Int> {
-        return footballDataApiClient.getCompetitionTeams(premierLeagueId)
-    }
-
     @Cacheable("upcomingMatches", key = "#teamName")
     fun getUpcomingMatchesByTeamName(teamName: String): List<Match> {
-        val teams = getPremierLeagueTeams()
-        val teamId = teams[teamName.lowercase()]
+        val teams = footballDataApiClient.getCompetitionTeams(premierLeagueId)
+        val team = teams?.find { it.name.equals(teamName, ignoreCase = true) || it.shortName.equals(teamName, ignoreCase = true) }
             ?: throw TeamNotFoundException(teamName)
 
-        return footballDataApiClient.getTeamUpcomingMatches(teamId)
+        return footballDataApiClient.getTeamUpcomingMatches(team.id)
+    }
+
+    @Cacheable("teamPlayer", key = "#playerName")
+    fun getTeamByNamePlayer(playerName: String): Team {
+        val teams = footballDataApiClient.getCompetitionTeams(premierLeagueId)
+        val playerTeam: Team = teams?.find { team ->
+            team.squad?.any { player -> player.name.equals(playerName, ignoreCase = true) } ?: false
+        } ?: throw PlayerNotFoundException(playerName)
+        return playerTeam
     }
 }

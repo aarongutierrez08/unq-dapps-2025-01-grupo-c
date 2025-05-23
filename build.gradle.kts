@@ -4,6 +4,7 @@ plugins {
 	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.sonarqube") version "6.0.1.5171"
+	jacoco
 }
 
 group = "com.example"
@@ -58,3 +59,34 @@ sonar {
 		property("sonar.host.url", "https://sonarcloud.io")
 	}
 }
+
+jacoco {
+	toolVersion = "0.8.13"
+}
+
+tasks.test {
+	useJUnitPlatform()
+	finalizedBy("jacocoTestReport")
+}
+
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+	reports {
+		xml.required.set(true)
+		html.required.set(true)
+	}
+}
+
+//tasks.jacocoTestCoverageVerification {
+//	violationRules {
+//		rule {
+//			limit {
+//				minimum = "0.70".toBigDecimal()
+//			}
+//		}
+//	}
+//}
+//
+//tasks.check {
+//	dependsOn(tasks.jacocoTestCoverageVerification)
+//}

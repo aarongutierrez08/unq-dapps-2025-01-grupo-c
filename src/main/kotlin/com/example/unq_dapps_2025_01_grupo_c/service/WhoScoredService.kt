@@ -1,6 +1,7 @@
 package com.example.unq_dapps_2025_01_grupo_c.service
 
-import com.example.unq_dapps_2025_01_grupo_c.exceptions.PlayersNotFoundException
+import com.example.unq_dapps_2025_01_grupo_c.dto.api.PositionRating
+import com.example.unq_dapps_2025_01_grupo_c.exceptions.PlayerNotFoundException
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
 import org.openqa.selenium.By
 import org.openqa.selenium.PageLoadStrategy
@@ -34,7 +35,7 @@ class WhoScoredService {
         val driver: WebDriver = createDriver()
         val baseUrl = "https://es.whoscored.com"
 
-        driver.get("$baseUrl/regions/11/tournaments/68/seasons/10573/argentina-liga-profesional")
+        driver.get("$baseUrl/regions/252/tournaments/2/inglaterra-premier-league")
         val wait = WebDriverWait(driver, Duration.ofSeconds(120))
 
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className("standings")))
@@ -54,10 +55,68 @@ class WhoScoredService {
         val teamPlayers = playersTable.findElements(By.className("iconize"))
             .mapNotNull { it.text.takeIf { txt -> txt.isNotBlank() } }
 
-        if (teamPlayers.isEmpty()) throw PlayersNotFoundException("Players of $teamName not found")
-
         driver.quit()
 
         return teamPlayers
+    }
+
+    fun getPlayerPerformance(playerName: String, playerTeamName: String): PositionRating {
+        val driver: WebDriver = createDriver()
+        val baseUrl = "https://es.whoscored.com"
+
+        driver.get("$baseUrl/regions/252/tournaments/2/inglaterra-premier-league")
+        val wait = WebDriverWait(driver, Duration.ofSeconds(120))
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("standings")))
+        val teamsTable = driver.findElement(By.className("standings"))
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("team-link")))
+        val links = teamsTable.findElements(By.className("team-link"))
+
+        val targetLink = links.firstOrNull { playerTeamName.contains(playerTeamName, true) || it.text.equals(playerTeamName, true) }
+            ?.getAttribute("href") ?: throw TeamNotFoundException(playerTeamName)
+
+        driver.get(targetLink)
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("player-table-statistics-body")))
+        val playersTable = driver.findElement(By.id("player-table-statistics-body"))
+
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("player-link")))
+
+        val teamPlayers = playersTable.findElements(By.className("player-link"))
+
+        val playerLink = teamPlayers.firstOrNull { it.text.equals(playerName, true) || it.text.contains(playerName, true) }
+            ?.getAttribute("href") ?: throw PlayerNotFoundException(playerName)
+
+        driver.get(playerLink)
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("pp-statistics")))
+
+        val topRatedPosition = findTopRatedPosition(driver, playerLink, wait)
+
+        driver.quit()
+
+        return topRatedPosition
+    }
+
+    private fun findTopRatedPosition(driver: WebDriver, playerLink: String, wait: WebDriverWait): PositionRating {
+        driver.get(playerLink)
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("pp-statistics")))
+        val rows = driver.findElements(By.cssSelector("#pp-statistics table tbody tr"))
+
+        var maxRating = Double.MIN_VALUE
+        var bestPosition = ""
+
+        for (row in rows) {
+            val position = row.findElement(By.cssSelector("td.position-table-entry")).text
+            val ratingText = row.findElement(By.cssSelector("td.rating")).text.replace(",", ".")
+            val rating = ratingText.toDoubleOrNull() ?: continue
+
+            if (rating > maxRating) {
+                maxRating = rating
+                bestPosition = position
+            }
+        }
+
+        val maxRatingPosition = PositionRating(bestPosition, maxRating)
+
+        return maxRatingPosition
     }
 }

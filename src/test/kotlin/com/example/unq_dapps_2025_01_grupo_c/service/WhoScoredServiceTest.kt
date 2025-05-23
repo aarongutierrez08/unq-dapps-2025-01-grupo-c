@@ -18,15 +18,15 @@ class WhoScoredServiceTest {
 
     @Test
     fun `fetchPlayers should return a list of players when team is found`() {
-        val teamName = "Boca Juniors"
+        val teamName = "Liverpool"
         val players = whoScoredScraperService.fetchPlayers(teamName)
 
-        assertTrue(players.contains("Edinson Cavani"))
+        assertTrue(players.contains("Mohamed Salah"))
     }
 
     @Test
     fun `fetchPlayers should return TeamNotFoundException when team is not found`() {
-        val teamName = "Manchester"
+        val teamName = "Boca Juniors"
 
         assertThrows<TeamNotFoundException> {
             whoScoredScraperService.fetchPlayers(teamName)
