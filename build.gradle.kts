@@ -57,6 +57,7 @@ sonar {
 		property("sonar.projectKey", "aarongutierrez08_unq-dapps-2025-01-grupo-c")
 		property("sonar.organization", "aarongutierrez08")
 		property("sonar.host.url", "https://sonarcloud.io")
+		property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
 	}
 }
 
