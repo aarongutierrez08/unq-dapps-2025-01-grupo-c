@@ -15,11 +15,13 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/match")
 @Tag(name = "Teams", description = "Information about football teams")
+@Transactional
 class MatchController(
     private val footballDataService: FootballDataService,
 ) {

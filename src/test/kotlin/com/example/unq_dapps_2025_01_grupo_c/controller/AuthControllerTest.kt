@@ -15,11 +15,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.post
+import org.springframework.transaction.annotation.Transactional
 
 @ActiveProfiles("prod")
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 class AuthControllerTest {
 
     @Autowired
@@ -82,7 +84,7 @@ class AuthControllerTest {
 
     @Test
     fun `should sign in when user already exists`() {
-        val request = AuthRequest(username = "arito2", password = "arito123")
+        val request = AuthRequest(username = username, password = password)
 
         mockMvc.post("/auth/login") {
             contentType = MediaType.APPLICATION_JSON
@@ -96,7 +98,7 @@ class AuthControllerTest {
 
     @Test
     fun `should return 401 when are invalid credentials`() {
-        val request = AuthRequest(username = "arito2", password = "arito1234")
+        val request = AuthRequest(username = username, password = "arito1234")
 
         mockMvc.post("/auth/login") {
             contentType = MediaType.APPLICATION_JSON
