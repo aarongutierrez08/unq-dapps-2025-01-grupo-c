@@ -89,7 +89,8 @@ tasks.jacocoTestReport {
 					"**/model/**",
 					"**/repository/**",
 					"**/security/**",
-					"**/ApplicationKt.class"
+					"**/ApplicationKt.class",
+					"com/example/unq_dapps_2025_01_grupo_c/*.class"
 				)
 			}
 		})
