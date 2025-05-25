@@ -1,6 +1,6 @@
 package com.example.unq_dapps_2025_01_grupo_c.service.external
 
-import com.example.unq_dapps_2025_01_grupo_c.dto.api.*
+import com.example.unq_dapps_2025_01_grupo_c.model.external.team.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.client.WebClient
@@ -47,7 +47,7 @@ private fun Match.toDomainModel(): Match {
         id = this.id,
         utcDate = this.utcDate,
         status = this.status,
-        matchday = this.matchday,
+        matchDay = this.matchDay,
         homeTeam = Team(
             id = this.homeTeam.id,
             name = this.homeTeam.name,
@@ -60,7 +60,7 @@ private fun Match.toDomainModel(): Match {
             shortName = this.awayTeam.shortName,
             tla = this.awayTeam.tla
         ),
-        competition = CompetitionInfo(
+        competition = Competition(
             id = this.competition.id,
             name = this.competition.name,
             code = this.competition.code,

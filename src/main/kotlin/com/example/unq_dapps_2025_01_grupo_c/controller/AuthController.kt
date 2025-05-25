@@ -1,7 +1,7 @@
 package com.example.unq_dapps_2025_01_grupo_c.controller
 
-import com.example.unq_dapps_2025_01_grupo_c.dto.AuthRequest
-import com.example.unq_dapps_2025_01_grupo_c.dto.AuthResponse
+import com.example.unq_dapps_2025_01_grupo_c.dto.auth.AuthRequest
+import com.example.unq_dapps_2025_01_grupo_c.dto.auth.AuthResponse
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
 import com.example.unq_dapps_2025_01_grupo_c.service.AuthService
 import io.swagger.v3.oas.annotations.Operation

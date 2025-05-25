@@ -1,8 +1,8 @@
 package com.example.unq_dapps_2025_01_grupo_c.controller
 
-import com.example.unq_dapps_2025_01_grupo_c.dto.PlayerRequest
+import com.example.unq_dapps_2025_01_grupo_c.dto.player.PlayerRequest
 import com.example.unq_dapps_2025_01_grupo_c.security.JwtUtil
-import com.example.unq_dapps_2025_01_grupo_c.model.User
+import com.example.unq_dapps_2025_01_grupo_c.model.user.User
 import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.hamcrest.Matchers.*

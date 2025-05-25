@@ -53,6 +53,15 @@ class GlobalExceptionHandler {
         return buildErrorResponse(errors, HttpStatus.BAD_REQUEST, request)
     }
 
+    @ExceptionHandler(UserNotFoundException::class)
+    fun handleUserNotFound(
+        ex: UserNotFoundException,
+        request: HttpServletRequest
+    ): ResponseEntity<ApiErrorResponse> {
+        return buildErrorResponse(ex.message, HttpStatus.NOT_FOUND, request)
+    }
+
+
     @ExceptionHandler(Exception::class)
     fun handleAll(
         ex: Exception,

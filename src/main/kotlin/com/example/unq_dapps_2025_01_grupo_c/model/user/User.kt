@@ -1,4 +1,4 @@
-package com.example.unq_dapps_2025_01_grupo_c.model
+package com.example.unq_dapps_2025_01_grupo_c.model.user
 
 import jakarta.persistence.*
 

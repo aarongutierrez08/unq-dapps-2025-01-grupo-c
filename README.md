@@ -10,7 +10,7 @@
 
 ### Funcionalidad
 - [x] Endpoint de próximos partidos de un equipo
-- [ ] Endpoint de historial de consultas
+- [x] Endpoint de historial de consultas
 - [x] Endpoint de rendimiento de jugador
 - [ ] Endpoint de predicción de partido
 
