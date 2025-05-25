@@ -28,15 +28,6 @@ jobs:
           java-version: 21
           distribution: 'corretto'
 
-      - name: Generate Jacoco Report
-        run: ./gradlew jacocoTestReport
-
-      - name: Upload Jacoco XML Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: jacoco-report-xml
-          path: build/reports/jacoco/test/jacocoTestReport.xml
-
       - name: Cache SonarQube packages
         uses: actions/cache@v4
         with:
