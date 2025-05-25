@@ -41,14 +41,16 @@ class MatchControllerTest {
 
     private val encoder = BCryptPasswordEncoder()
     private lateinit var token: String
+    private var username = "arito3"
+    private var password = "arito123"
 
     @BeforeEach
     fun setup() {
-        if (!userRepository.existsByUsername("arito2")) {
-            val user = User(username = "arito2", password = encoder.encode("arito123"))
+        if (!userRepository.existsByUsername(username)) {
+            val user = User(username = username, password = encoder.encode(password))
             userRepository.save(user)
         }
-        token = jwtUtil.generateToken("arito2")
+        token = jwtUtil.generateToken(username)
     }
 
     @AfterEach

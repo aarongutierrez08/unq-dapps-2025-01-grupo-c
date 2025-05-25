@@ -36,10 +36,13 @@ class AuthControllerTest {
 
     private val encoder = BCryptPasswordEncoder()
 
+    private var username = "arito2"
+    private var password = "arito123"
+
     @BeforeEach
     fun setup() {
-        if (!userRepository.existsByUsername("arito2")) {
-            val user = User(username = "arito2", password = encoder.encode("arito123"))
+        if (!userRepository.existsByUsername(username)) {
+            val user = User(username = username, password = encoder.encode(password))
             userRepository.save(user)
         }
     }
