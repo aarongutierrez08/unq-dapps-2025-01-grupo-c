@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/match")
 @Tag(name = "Teams", description = "Information about football teams")
-@Transactional
 class MatchController(
     private val footballDataService: FootballDataService,
 ) {
