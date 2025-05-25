@@ -1,8 +1,9 @@
 package com.example.unq_dapps_2025_01_grupo_c.controller
 
+import com.example.unq_dapps_2025_01_grupo_c.dto.query_history.QueryHistoryResponse
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.UserNotFoundException
-import com.example.unq_dapps_2025_01_grupo_c.model.query_history.QueryHistory
+import com.example.unq_dapps_2025_01_grupo_c.model.query_history.toResponseList
 import com.example.unq_dapps_2025_01_grupo_c.repository.QueryHistoryRepository
 import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
 import io.swagger.v3.oas.annotations.Operation
@@ -37,7 +38,7 @@ class QueryHistoryController (
         ]
     )
     @GetMapping("")
-    fun getQueryHistory(): ResponseEntity<List<QueryHistory>> {
+    fun getQueryHistory(): ResponseEntity<List<QueryHistoryResponse>> {
         val username = SecurityContextHolder.getContext().authentication.name
         val userId = userRepository.findByUsername(username)
             .orElseThrow { UserNotFoundException(username) }
@@ -45,7 +46,7 @@ class QueryHistoryController (
 
         val queriesHistory = queryHistoryRepository.findAllByUserId(userId)
 
-        return ResponseEntity.ok(queriesHistory)
+        return ResponseEntity.ok(queriesHistory.toResponseList())
     }
 }
 

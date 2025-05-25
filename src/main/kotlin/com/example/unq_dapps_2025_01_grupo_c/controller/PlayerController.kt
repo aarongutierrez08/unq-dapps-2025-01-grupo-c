@@ -2,7 +2,7 @@ package com.example.unq_dapps_2025_01_grupo_c.controller
 
 import com.example.unq_dapps_2025_01_grupo_c.model.PlayerPerformanceRequest
 import com.example.unq_dapps_2025_01_grupo_c.model.PlayerPerformanceResponse
-import com.example.unq_dapps_2025_01_grupo_c.model.external.team.Team
+import com.example.unq_dapps_2025_01_grupo_c.model.external.Team
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
 import com.example.unq_dapps_2025_01_grupo_c.service.FootballDataService
 import com.example.unq_dapps_2025_01_grupo_c.service.WhoScoredService
