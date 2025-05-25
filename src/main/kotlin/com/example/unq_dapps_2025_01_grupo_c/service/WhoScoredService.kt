@@ -1,6 +1,6 @@
 package com.example.unq_dapps_2025_01_grupo_c.service
 
-import com.example.unq_dapps_2025_01_grupo_c.dto.api.PositionRating
+import com.example.unq_dapps_2025_01_grupo_c.model.PositionRating
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.PlayerNotFoundException
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
 import org.openqa.selenium.By

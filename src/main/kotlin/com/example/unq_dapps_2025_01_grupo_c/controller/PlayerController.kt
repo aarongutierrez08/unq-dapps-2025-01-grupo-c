@@ -1,8 +1,8 @@
 package com.example.unq_dapps_2025_01_grupo_c.controller
 
-import com.example.unq_dapps_2025_01_grupo_c.dto.api.PlayerPerformanceRequest
-import com.example.unq_dapps_2025_01_grupo_c.dto.api.PlayerPerformanceResponse
-import com.example.unq_dapps_2025_01_grupo_c.dto.api.Team
+import com.example.unq_dapps_2025_01_grupo_c.model.PlayerPerformanceRequest
+import com.example.unq_dapps_2025_01_grupo_c.model.PlayerPerformanceResponse
+import com.example.unq_dapps_2025_01_grupo_c.model.external.team.Team
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
 import com.example.unq_dapps_2025_01_grupo_c.service.FootballDataService
 import com.example.unq_dapps_2025_01_grupo_c.service.WhoScoredService
@@ -16,7 +16,6 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-
 
 @RestController
 @RequestMapping("/player")

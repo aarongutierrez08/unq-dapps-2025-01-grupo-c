@@ -10,6 +10,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 class SecurityConfig(
     private val jwtFilter: JwtAuthFilter,
+    private val queryLoggingFilter: QueryLoggingFilter,
     private val authEntryPoint: JwtAuthenticationEntryPoint
 ) {
 
@@ -32,5 +33,6 @@ class SecurityConfig(
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterAfter(queryLoggingFilter, JwtAuthFilter::class.java)
             .build()
 }

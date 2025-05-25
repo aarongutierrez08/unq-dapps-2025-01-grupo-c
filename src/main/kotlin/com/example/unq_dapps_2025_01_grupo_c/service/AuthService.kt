@@ -1,9 +1,9 @@
 package com.example.unq_dapps_2025_01_grupo_c.service
 
-import com.example.unq_dapps_2025_01_grupo_c.dto.AuthRequest
+import com.example.unq_dapps_2025_01_grupo_c.dto.auth.AuthRequest
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.InvalidCredentialsException
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.UserAlreadyExistsException
-import com.example.unq_dapps_2025_01_grupo_c.model.User
+import com.example.unq_dapps_2025_01_grupo_c.model.user.User
 import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
 import com.example.unq_dapps_2025_01_grupo_c.security.JwtUtil
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder

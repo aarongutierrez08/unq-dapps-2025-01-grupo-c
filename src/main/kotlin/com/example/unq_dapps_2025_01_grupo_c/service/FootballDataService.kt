@@ -1,7 +1,7 @@
 package com.example.unq_dapps_2025_01_grupo_c.service
 
-import com.example.unq_dapps_2025_01_grupo_c.dto.api.Match
-import com.example.unq_dapps_2025_01_grupo_c.dto.api.Team
+import com.example.unq_dapps_2025_01_grupo_c.model.external.team.Match
+import com.example.unq_dapps_2025_01_grupo_c.model.external.team.Team
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.PlayerNotFoundException
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
 import com.example.unq_dapps_2025_01_grupo_c.service.external.FootballDataApiClient

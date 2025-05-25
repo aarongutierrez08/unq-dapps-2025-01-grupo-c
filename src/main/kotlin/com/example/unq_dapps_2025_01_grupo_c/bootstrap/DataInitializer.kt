@@ -1,6 +1,6 @@
 package com.example.unq_dapps_2025_01_grupo_c.bootstrap
 
-import com.example.unq_dapps_2025_01_grupo_c.model.User
+import com.example.unq_dapps_2025_01_grupo_c.model.user.User
 import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Profile

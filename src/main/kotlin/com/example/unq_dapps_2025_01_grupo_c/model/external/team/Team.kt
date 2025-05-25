@@ -1,4 +1,4 @@
-package com.example.unq_dapps_2025_01_grupo_c.dto.api
+package com.example.unq_dapps_2025_01_grupo_c.model.external.team
 
 data class Team(
     val id: Int,
@@ -24,17 +24,17 @@ data class Match(
     val id: Int,
     val utcDate: String,
     val status: String,
-    val matchday: Int?,
+    val matchDay: Int?,
     val homeTeam: Team,
     val awayTeam: Team,
-    val competition: CompetitionInfo
+    val competition: Competition
 )
 
 data class TeamMatchesResponse(
     val matches: List<Match>
 )
 
-data class CompetitionInfo(
+data class Competition(
     val id: Int,
     val name: String,
     val code: String,
