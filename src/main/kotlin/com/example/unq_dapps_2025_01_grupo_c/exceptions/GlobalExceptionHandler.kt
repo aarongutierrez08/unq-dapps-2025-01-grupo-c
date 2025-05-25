@@ -61,6 +61,13 @@ class GlobalExceptionHandler {
         return buildErrorResponse(ex.message, HttpStatus.NOT_FOUND, request)
     }
 
+    @ExceptionHandler(NoMatchBetweenException::class)
+    fun handleUserNotFound(
+        ex: NoMatchBetweenException,
+        request: HttpServletRequest
+    ): ResponseEntity<ApiErrorResponse> {
+        return buildErrorResponse(ex.message, HttpStatus.NOT_FOUND, request)
+    }
 
     @ExceptionHandler(Exception::class)
     fun handleAll(

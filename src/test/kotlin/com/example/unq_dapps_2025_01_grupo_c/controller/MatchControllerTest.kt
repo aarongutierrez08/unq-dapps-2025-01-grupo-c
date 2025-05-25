@@ -1,9 +1,11 @@
 package com.example.unq_dapps_2025_01_grupo_c.controller
 
-import com.example.unq_dapps_2025_01_grupo_c.dto.auth.AuthRequest
+import com.example.unq_dapps_2025_01_grupo_c.dto.match.MatchPredictionRequest
+import com.example.unq_dapps_2025_01_grupo_c.dto.match.UpcomingMatchesRequest
 import com.example.unq_dapps_2025_01_grupo_c.model.user.User
 import com.example.unq_dapps_2025_01_grupo_c.repository.QueryHistoryRepository
 import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
+import com.example.unq_dapps_2025_01_grupo_c.security.JwtUtil
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.*
@@ -22,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Transactional
-class AuthControllerTest {
+class MatchControllerTest {
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -31,14 +33,17 @@ class AuthControllerTest {
     lateinit var objectMapper: ObjectMapper
 
     @Autowired
+    lateinit var jwtUtil: JwtUtil
+
+    @Autowired
     lateinit var userRepository: UserRepository
 
     @Autowired
     lateinit var queryHistoryRepository: QueryHistoryRepository
 
     private val encoder = BCryptPasswordEncoder()
-
-    private var username = "arito2"
+    private lateinit var token: String
+    private var username = "arito3"
     private var password = "arito123"
 
     @BeforeEach
@@ -47,6 +52,7 @@ class AuthControllerTest {
             val user = User(username = username, password = encoder.encode(password))
             userRepository.save(user)
         }
+        token = jwtUtil.generateToken(username)
     }
 
     @AfterEach
@@ -56,56 +62,59 @@ class AuthControllerTest {
     }
 
     @Test
-    fun `should register user when is valid`() {
-        val request = AuthRequest(username = "validUser", password = "validUser")
+    fun `should return upcoming matches of the team by teamName`() {
+        val request = UpcomingMatchesRequest(teamName = "arsenal")
 
-        mockMvc.post("/auth/register") {
+        mockMvc.post("/match/upcoming-matches") {
             contentType = MediaType.APPLICATION_JSON
+            header("Authorization", "Bearer $token")
             content = objectMapper.writeValueAsString(request)
         }.andExpect {
             status { isOk() }
-            header { exists("Authorization") }
-            jsonPath("$.message", equalTo("User registered"))
+            jsonPath("$", hasSize<Any>(0)) //zero because no more matches in premiere league 2025
         }
     }
 
     @Test
-    fun `should return 400 when user is invalid`() {
-        val request = AuthRequest(username = "ar", password = "ar")
+    fun `should return 404 when teamName not found`() {
+        val request = UpcomingMatchesRequest(teamName = "boquita")
 
-        mockMvc.post("/auth/register") {
+        mockMvc.post("/match/upcoming-matches") {
             contentType = MediaType.APPLICATION_JSON
+            header("Authorization", "Bearer $token")
             content = objectMapper.writeValueAsString(request)
         }.andExpect {
-            status { isBadRequest() }
-            header { doesNotExist("Authorization") }
+            status { isNotFound() }
+            jsonPath("$.message", equalTo("Team ${request.teamName} not found"))
         }
     }
 
     @Test
-    fun `should sign in when user already exists`() {
-        val request = AuthRequest(username = username, password = password)
+    fun `should return prediction match info when teams are valid`() {
+        val request = MatchPredictionRequest(teamNameOne = "arsenal", teamNameTwo = "liverpool")
 
-        mockMvc.post("/auth/login") {
+        mockMvc.post("/match/prediction") {
             contentType = MediaType.APPLICATION_JSON
+            header("Authorization", "Bearer $token")
             content = objectMapper.writeValueAsString(request)
         }.andExpect {
             status { isOk() }
-            header { exists("Authorization") }
-            jsonPath("$.message", equalTo("Login successful"))
+            jsonPath("$.historicalResults", hasSize<Any>(greaterThan(0)))
         }
     }
 
     @Test
-    fun `should return 401 when are invalid credentials`() {
-        val request = AuthRequest(username = username, password = "arito1234")
+    fun `should return 404 when no matches found`() {
+        val request = MatchPredictionRequest(teamNameOne = "boquita", teamNameTwo = "riber")
 
-        mockMvc.post("/auth/login") {
+        mockMvc.post("/match/prediction") {
             contentType = MediaType.APPLICATION_JSON
+            header("Authorization", "Bearer $token")
             content = objectMapper.writeValueAsString(request)
         }.andExpect {
-            status { isUnauthorized() }
-            header { doesNotExist("Authorization") }
+            status { isNotFound() }
+            jsonPath("$.message", equalTo("No matches between ${request.teamNameOne} and ${request.teamNameTwo}"))
         }
     }
+
 }

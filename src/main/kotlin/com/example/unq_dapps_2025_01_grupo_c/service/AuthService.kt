@@ -8,6 +8,7 @@ import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
 import com.example.unq_dapps_2025_01_grupo_c.security.JwtUtil
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AuthService(
@@ -16,6 +17,7 @@ class AuthService(
 ) {
     private val encoder = BCryptPasswordEncoder()
 
+    @Transactional
     fun register(request: AuthRequest): String {
         if (userRepository.findByUsername(request.username).isPresent) {
             throw UserAlreadyExistsException("User '${request.username}' already exists.")
@@ -28,6 +30,7 @@ class AuthService(
         return jwtUtil.generateToken(user.username)
     }
 
+    @Transactional
     fun login(request: AuthRequest): String {
         val user = userRepository.findByUsername(request.username)
             .orElseThrow {

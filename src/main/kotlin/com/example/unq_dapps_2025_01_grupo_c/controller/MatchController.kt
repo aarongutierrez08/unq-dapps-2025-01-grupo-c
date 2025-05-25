@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -55,7 +56,7 @@ class MatchController(
             ApiResponse(responseCode = "200", description = "Match prediction info"),
             ApiResponse(
                 responseCode = "404",
-                description = "Team not found",
+                description = "Any team not found",
                 content = [Content(schema = Schema(implementation = ApiErrorResponse::class))]
             )
         ]

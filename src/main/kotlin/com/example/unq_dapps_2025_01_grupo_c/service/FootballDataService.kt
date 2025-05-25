@@ -1,6 +1,7 @@
 package com.example.unq_dapps_2025_01_grupo_c.service
 
 import com.example.unq_dapps_2025_01_grupo_c.dto.match.MatchPredictionResponse
+import com.example.unq_dapps_2025_01_grupo_c.exceptions.NoMatchBetweenException
 import com.example.unq_dapps_2025_01_grupo_c.model.external.Match
 import com.example.unq_dapps_2025_01_grupo_c.model.external.Team
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.PlayerNotFoundException
@@ -35,11 +36,14 @@ class FootballDataService(
         return playerTeam
     }
 
-    @Cacheable("teamPlayer", key = "#playerName")
+    @Cacheable("matchPrediction", key = "#teamNameOne + '_' + #teamNameTwo")
     fun getMatchPredictionTo(teamNameOne: String, teamNameTwo: String): MatchPredictionResponse {
         val matches = footballDataApiClient.getCompetitionLastMatches(premierLeagueId)
-        val matchesBetweemTeams = findMatchesBetweenTeams(matches, teamNameOne, teamNameTwo)
-        val prediction = matchPredictor.predictMatch(matchesBetweemTeams, teamNameOne, teamNameTwo)
+        val matchesBetweenTeams = findMatchesBetweenTeams(matches, teamNameOne, teamNameTwo)
+        if (matchesBetweenTeams.isEmpty()) {
+            throw NoMatchBetweenException(teamNameOne, teamNameTwo)
+        }
+        val prediction = matchPredictor.predictMatch(matchesBetweenTeams, teamNameOne, teamNameTwo)
         return prediction
     }
 
