@@ -16,6 +16,10 @@ import java.time.Duration
 @Service
 class WhoScoredService {
 
+    val teamLinkClassName = "team-link"
+    val standingsClassName = "standings"
+    val playersTableId = "player-table-statistics-body"
+
     fun createDriver(): WebDriver {
         val options = ChromeOptions().apply {
             addArguments(
@@ -26,7 +30,6 @@ class WhoScoredService {
                 "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36"
             )
             setPageLoadStrategy(PageLoadStrategy.NORMAL)
-//            setBinary(System.getenv("CHROME_BIN") ?: "/usr/bin/google-chrome")
         }
         return ChromeDriver(options)
     }
@@ -38,17 +41,17 @@ class WhoScoredService {
         driver.get("$baseUrl/regions/252/tournaments/2/inglaterra-premier-league")
         val wait = WebDriverWait(driver, Duration.ofSeconds(120))
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("standings")))
-        val teamsTable = driver.findElement(By.className("standings"))
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("team-link")))
-        val links = teamsTable.findElements(By.className("team-link"))
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(standingsClassName)))
+        val teamsTable = driver.findElement(By.className(standingsClassName))
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className(teamLinkClassName)))
+        val links = teamsTable.findElements(By.className(teamLinkClassName))
 
         val targetLink = links.firstOrNull { it.text.equals(teamName, true) || it.text.contains(teamName, true) }
             ?.getAttribute("href") ?: throw TeamNotFoundException(teamName)
 
         driver.get(targetLink)
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("player-table-statistics-body")))
-        val playersTable = driver.findElement(By.id("player-table-statistics-body"))
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id(playersTableId)))
+        val playersTable = driver.findElement(By.id(playersTableId))
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("iconize")))
 
@@ -67,17 +70,17 @@ class WhoScoredService {
         driver.get("$baseUrl/regions/252/tournaments/2/inglaterra-premier-league")
         val wait = WebDriverWait(driver, Duration.ofSeconds(120))
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.className("standings")))
-        val teamsTable = driver.findElement(By.className("standings"))
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("team-link")))
-        val links = teamsTable.findElements(By.className("team-link"))
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.className(standingsClassName)))
+        val teamsTable = driver.findElement(By.className(standingsClassName))
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className(teamLinkClassName)))
+        val links = teamsTable.findElements(By.className(teamLinkClassName))
 
         val targetLink = links.firstOrNull { playerTeamName.contains(playerTeamName, true) || it.text.equals(playerTeamName, true) }
             ?.getAttribute("href") ?: throw TeamNotFoundException(playerTeamName)
 
         driver.get(targetLink)
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("player-table-statistics-body")))
-        val playersTable = driver.findElement(By.id("player-table-statistics-body"))
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id(playersTableId)))
+        val playersTable = driver.findElement(By.id(playersTableId))
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("player-link")))
 

@@ -1,9 +1,7 @@
 package com.example.unq_dapps_2025_01_grupo_c.controller
 
 import com.example.unq_dapps_2025_01_grupo_c.dto.player.PlayerRequest
-import com.example.unq_dapps_2025_01_grupo_c.model.external.team.Match
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
-import com.example.unq_dapps_2025_01_grupo_c.service.FootballDataService
 import com.example.unq_dapps_2025_01_grupo_c.service.WhoScoredService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -21,31 +19,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/team")
 @Tag(name = "Teams", description = "Information about football teams")
 class TeamController(
-    private val footballDataService: FootballDataService,
     private val whoScoredService: WhoScoredService,
 ) {
-
-    @Operation(
-        summary = "Get upcoming matches by team name",
-        description = "Retrieve upcoming matches given a team name"
-    )
-    @ApiResponses(
-        value = [
-            ApiResponse(responseCode = "200", description = "List of upcoming matches"),
-            ApiResponse(
-                responseCode = "404",
-                description = "Team not found",
-                content = [Content(schema = Schema(implementation = ApiErrorResponse::class))]
-            )
-        ]
-    )
-    @GetMapping("/{teamName}/upcoming-matches")
-    fun getUpcomingMatches(
-        @Parameter(description = "Name of the team", required = true)
-        @PathVariable teamName: String
-    ): ResponseEntity<List<Match>> {
-        return ResponseEntity.ok(footballDataService.getUpcomingMatchesByTeamName(teamName))
-    }
 
     @Operation(
         summary = "Get players by team",

@@ -12,7 +12,7 @@
 - [x] Endpoint de próximos partidos de un equipo
 - [x] Endpoint de historial de consultas
 - [x] Endpoint de rendimiento de jugador
-- [ ] Endpoint de predicción de partido
+- [x] Endpoint de predicción de partido
 
 ------------------------------------------------------------
 ## Demo 1:
