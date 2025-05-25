@@ -71,6 +71,11 @@ tasks.test {
 	finalizedBy("jacocoTestReport")
 }
 
+tasks.sonar {
+	dependsOn(tasks.jacocoTestReport)
+}
+
+
 tasks.jacocoTestReport {
 	dependsOn(tasks.test)
 	reports {
