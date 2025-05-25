@@ -11,6 +11,12 @@ jobs:
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
+
+    env:
+      DB_URL: ${{ secrets.DB_URL }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASS: ${{ secrets.DB_PASS }}
+      
     steps:
       - uses: actions/checkout@v4
         with:

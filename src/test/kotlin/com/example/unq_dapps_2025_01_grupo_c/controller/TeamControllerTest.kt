@@ -2,8 +2,6 @@ package com.example.unq_dapps_2025_01_grupo_c.controller
 
 import com.example.unq_dapps_2025_01_grupo_c.dto.player.PlayerRequest
 import com.example.unq_dapps_2025_01_grupo_c.security.JwtUtil
-import com.example.unq_dapps_2025_01_grupo_c.model.user.User
-import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.hamcrest.Matchers.*
 import org.junit.jupiter.api.*
@@ -28,19 +26,13 @@ class TeamControllerTest {
     lateinit var jwtUtil: JwtUtil
 
     @Autowired
-    lateinit var userRepository: UserRepository
-
-    @Autowired
     lateinit var objectMapper: ObjectMapper
 
     private lateinit var token: String
 
     @BeforeEach
     fun setup() {
-        userRepository.deleteAll()
-        val user = User(username = "testuser", password = "123456")
-        userRepository.save(user)
-        token = jwtUtil.generateToken("testuser")
+        token = jwtUtil.generateToken("arito")
     }
 
     @Tag("scrapping")
