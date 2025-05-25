@@ -5,7 +5,7 @@ plugins {
 	id("org.springframework.boot") version "3.4.4"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("org.sonarqube") version "6.0.1.5171"
-	jacoco
+	id("jacoco")
 }
 
 group = "com.example"
@@ -66,9 +66,13 @@ jacoco {
 	toolVersion = "0.8.13"
 }
 
+tasks.jacocoTestReport {
+	dependsOn(tasks.test) // tests are required to run before generating the report
+	}
+
 tasks.test {
 	useJUnitPlatform()
-	finalizedBy("jacocoTestReport")
+	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
 }
 
 tasks.sonar {
@@ -81,6 +85,7 @@ tasks.jacocoTestReport {
 	reports {
 		xml.required.set(true)
 		html.required.set(true)
+		html.outputLocation = layout.buildDirectory.dir("jacocoHtml")
 	}
 
 	classDirectories.setFrom(
