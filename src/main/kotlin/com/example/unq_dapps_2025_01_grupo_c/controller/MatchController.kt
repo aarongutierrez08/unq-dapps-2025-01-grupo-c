@@ -55,7 +55,7 @@ class MatchController(
             ApiResponse(responseCode = "200", description = "Match prediction info"),
             ApiResponse(
                 responseCode = "404",
-                description = "Team not found",
+                description = "Any team not found",
                 content = [Content(schema = Schema(implementation = ApiErrorResponse::class))]
             )
         ]

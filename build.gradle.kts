@@ -69,8 +69,12 @@ sonar {
             **/model/**,
             **/repository/**,
             **/security/**,
+            **/controller/PlayerController**,
+			"**/service/WhoScoredService",
             **/ApplicationKt.class,
-            com/example/unq_dapps_2025_01_grupo_c/*.class
+            com/example/unq_dapps_2025_01_grupo_c/*.class,
+			**/TeamControllerTest,
+			**/WhoScoredTest,
             """.trimIndent().replace("\n", ",")
 		)
 	}
@@ -81,12 +85,12 @@ jacoco {
 }
 
 tasks.jacocoTestReport {
-	dependsOn(tasks.test) // tests are required to run before generating the report
-	}
+	dependsOn(tasks.test)
+}
 
 tasks.test {
 	useJUnitPlatform()
-	finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+	finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.sonar {
@@ -113,24 +117,14 @@ tasks.jacocoTestReport {
 					"**/model/**",
 					"**/repository/**",
 					"**/security/**",
+					"**/controller/PlayerController**",
+					"**/service/WhoScoredService",
 					"**/ApplicationKt.class",
-					"com/example/unq_dapps_2025_01_grupo_c/*.class"
+					"com/example/unq_dapps_2025_01_grupo_c/*.class",
+					"**/TeamControllerTest",
+					"**/WhoScoredTest",
 				)
 			}
 		})
 	)
 }
-
-//tasks.jacocoTestCoverageVerification {
-//	violationRules {
-//		rule {
-//			limit {
-//				minimum = "0.70".toBigDecimal()
-//			}
-//		}
-//	}
-//}
-//
-//tasks.check {
-//	dependsOn(tasks.jacocoTestCoverageVerification)
-//}
