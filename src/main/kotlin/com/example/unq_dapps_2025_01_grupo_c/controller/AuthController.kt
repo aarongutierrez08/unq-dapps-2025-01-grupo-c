@@ -31,7 +31,7 @@ class AuthController(
         value = [
             ApiResponse(responseCode = "200", description = "User registered successfully"),
             ApiResponse(
-                responseCode = "404",
+                responseCode = "400",
                 description = "Invalid request format or user already exists",
                 content = [Content(schema = Schema(implementation = ApiErrorResponse::class))]
             )
@@ -56,7 +56,7 @@ class AuthController(
         value = [
             ApiResponse(responseCode = "200", description = "Login successful"),
             ApiResponse(
-                responseCode = "404",
+                responseCode = "401",
                 description = "Unauthorized - Invalid credentials",
                 content = [Content(schema = Schema(implementation = ApiErrorResponse::class))]
             ),
