@@ -59,6 +59,20 @@ sonar {
 		property("sonar.organization", "aarongutierrez08")
 		property("sonar.host.url", "https://sonarcloud.io")
 		property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
+		property(
+			"sonar.coverage.exclusions",
+			"""
+            **/config/**,
+            **/bootstrap/**,
+            **/dto/**,
+            **/exceptions/**,
+            **/model/**,
+            **/repository/**,
+            **/security/**,
+            **/ApplicationKt.class,
+            com/example/unq_dapps_2025_01_grupo_c/*.class
+            """.trimIndent().replace("\n", ",")
+		)
 	}
 }
 
