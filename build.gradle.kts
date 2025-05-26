@@ -40,6 +40,7 @@ dependencies {
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 	testImplementation("org.hsqldb:hsqldb:2.7.4")
+	testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
@@ -70,7 +71,7 @@ sonar {
             **/repository/**,
             **/security/**,
             **/controller/PlayerController**,
-			"**/service/WhoScoredService",
+			"**/service/WhoScoredService**",
             **/ApplicationKt.class,
             com/example/unq_dapps_2025_01_grupo_c/*.class,
 			**/TeamControllerTest,
@@ -118,7 +119,7 @@ tasks.jacocoTestReport {
 					"**/repository/**",
 					"**/security/**",
 					"**/controller/PlayerController**",
-					"**/service/WhoScoredService",
+					"**/service/WhoScoredService*",
 					"**/ApplicationKt.class",
 					"com/example/unq_dapps_2025_01_grupo_c/*.class",
 					"**/TeamControllerTest",
