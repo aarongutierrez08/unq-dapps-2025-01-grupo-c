@@ -1,7 +1,7 @@
 ## Demo 2:
 
 ### Core
-- [ ] Estado de build en "Verde"
+- [x] Estado de build en "Verde"
 - [x] Utilizar HSQLDB para persistir datos (opcion H2)
 - [x] Crear datos de prueba cuando levanta la aplicación
 - [x] Documentation de Endpoints (APIs) con Swagger (v3)
