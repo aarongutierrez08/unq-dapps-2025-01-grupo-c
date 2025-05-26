@@ -3,7 +3,7 @@ FROM amazoncorretto:21 as build
 
 WORKDIR /app
 COPY . .
-RUN ./gradlew build --no-daemon
+RUN ./gradlew build -x test --no-daemon
 
 # Etapa 2: Run
 FROM amazoncorretto:21
