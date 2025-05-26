@@ -9,20 +9,15 @@ RUN ./gradlew build -x test --no-daemon
 FROM amazoncorretto:21
 
 RUN yum update -y && \
-    yum install -y wget unzip libX11 curl sed grep && \
+    yum install -y wget unzip libX11 && \
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm && \
     yum install -y ./google-chrome-stable_current_x86_64.rpm && \
     rm google-chrome-stable_current_x86_64.rpm && \
-    CHROME_VERSION=$(google-chrome --version | grep -oP "\d+\.\d+\.\d+\.\d+") && \
-    echo "Installed Chrome version: $CHROME_VERSION" && \
-    CHROMEDRIVER_URL=$(curl -s "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions-with-downloads.json" | \
-      grep -A 10 "\"$CHROME_VERSION\"" | grep "linux64" | grep "chromedriver-linux64.zip" | sed -n 's/.*"url": "\(.*\)".*/\1/p') && \
-    echo "Downloading Chromedriver from: $CHROMEDRIVER_URL" && \
-    wget "$CHROMEDRIVER_URL" -O chromedriver.zip && \
-    unzip chromedriver.zip && \
+    wget https://storage.googleapis.com/chrome-for-testing-public/136.0.7103.113/linux64/chromedriver-linux64.zip && \
+    unzip chromedriver-linux64.zip && \
     mv chromedriver-linux64/chromedriver /usr/bin/chromedriver && \
     chmod +x /usr/bin/chromedriver && \
-    rm -rf chromedriver-linux64 chromedriver.zip
+    rm -rf chromedriver-linux64 chromedriver_linux64.zip
 
 # Variables de entorno para Selenium
 ENV CHROME_BIN="/usr/bin/google-chrome"
