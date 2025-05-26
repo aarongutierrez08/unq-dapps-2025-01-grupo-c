@@ -12,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration
 
 import com.example.unq_dapps_2025_01_grupo_c.model.external.*
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.test.context.ActiveProfiles
 import java.time.ZonedDateTime
 
 fun generateValidMatchApiResponseJson(objectMapper: ObjectMapper): String {
@@ -89,7 +90,22 @@ fun generateValidMatchApiResponseJson(objectMapper: ObjectMapper): String {
     return objectMapper.writeValueAsString(response)
 }
 
+fun generateValidTeamsApiResponseJson(objectMapper: ObjectMapper): String {
+    val response = TeamsApiResponse(
+        teams = listOf(
+            Team(
+                id = 1,
+                name = "Arsenal FC",
+                shortName = "Arsenal",
+                tla = "ARS",
+                crest = "https://example.com/crest.png"
+            )
+        )
+    )
+    return objectMapper.writeValueAsString(response)
+}
 
+@ActiveProfiles("test")
 @SpringBootTest
 @ContextConfiguration(initializers = [FootballDataApiClientTest.Companion.Initializer::class])
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -137,4 +153,44 @@ class FootballDataApiClientTest {
         Assertions.assertEquals(1, result?.size)
         Assertions.assertEquals("SCHEDULED", result?.first()?.status)
     }
+
+    @Test
+    fun `should return competition teams`() {
+        val mockResponseJson = generateValidTeamsApiResponseJson(objectMapper)
+        mockWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(mockResponseJson)
+                .addHeader("Content-Type", "application/json")
+        )
+
+        val result = footballDataApiClient.getCompetitionTeams(2021)
+
+        Assertions.assertNotNull(result)
+        Assertions.assertEquals(1, result?.size)
+        Assertions.assertEquals("Arsenal FC", result?.first()?.name)
+    }
+
+    @Test
+    fun `should return last matches for 2024 and 2023`() {
+        val mockResponseJson = generateValidMatchApiResponseJson(objectMapper)
+        mockWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(mockResponseJson)
+                .addHeader("Content-Type", "application/json")
+        )
+        mockWebServer.enqueue(
+            MockResponse()
+                .setResponseCode(200)
+                .setBody(mockResponseJson)
+                .addHeader("Content-Type", "application/json")
+        )
+
+        val result = footballDataApiClient.getCompetitionLastMatches(2021)
+
+        Assertions.assertEquals(2, result.size)
+        Assertions.assertEquals("SCHEDULED", result[0].status)
+    }
+
 }
