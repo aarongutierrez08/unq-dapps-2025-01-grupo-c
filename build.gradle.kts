@@ -34,9 +34,10 @@ dependencies {
 	implementation("org.seleniumhq.selenium:selenium-java:4.31.0")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation ("org.springframework.boot:spring-boot-starter-actuator")
-	implementation ("io.micrometer:micrometer-registry-prometheus")
+	implementation("org.springframework:spring-webflux")
+	implementation("io.micrometer:micrometer-core")
+	implementation("io.micrometer:micrometer-registry-prometheus")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
@@ -48,6 +49,7 @@ dependencies {
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 	runtimeOnly("org.postgresql:postgresql")
+	runtimeOnly("org.hsqldb:hsqldb:2.7.4")
 }
 
 tasks.test {
