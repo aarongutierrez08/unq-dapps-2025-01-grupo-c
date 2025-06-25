@@ -21,6 +21,14 @@ class JwtAuthFilter(
     ) {
         val authHeader = request.getHeader("Authorization")
 
+        val path = request.servletPath
+
+        // omited Filter
+        if (path.startsWith("/auth") || path.startsWith("/swagger") || path.startsWith("/v3/api-docs")) {
+            filterChain.doFilter(request, response)
+            return
+        }
+
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             val token = authHeader.substring(7)
             val username = jwtUtil.extractUsername(token)

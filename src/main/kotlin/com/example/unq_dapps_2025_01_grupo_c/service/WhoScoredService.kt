@@ -21,18 +21,14 @@ class WhoScoredService {
     val playersTableId = "player-table-statistics-body"
 
     fun createDriver(): WebDriver {
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\nacho\\Desktop\\chromedriver-win64\\chromedriver.exe")
+
         val options = ChromeOptions().apply {
-            addArguments(
-                "--headless=new",
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-                "--disable-gpu",
-                "--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36",
-                "--remote-debugging-port=9222"
-            )
+            addArguments("--headless=new", "--disable-gpu")
+            setBinary("C:\\Users\\nacho\\Desktop\\chrome-win64\\chrome.exe")
             setPageLoadStrategy(PageLoadStrategy.NORMAL)
-            setBinary(System.getenv("CHROME_BIN") ?: "/usr/bin/google-chrome")
         }
+
         return ChromeDriver(options)
     }
 
