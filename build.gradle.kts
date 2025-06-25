@@ -32,9 +32,11 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
 	implementation("org.seleniumhq.selenium:selenium-java:4.31.0")
+	implementation("com.h2database:h2")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
+	implementation("io.github.bonigarcia:webdrivermanager:5.4.1")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
