@@ -1,5 +1,6 @@
 package com.example.unq_dapps_2025_01_grupo_c.service.external
 
+import com.example.unq_dapps_2025_01_grupo_c.external.FootballDataApiClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.jupiter.api.*

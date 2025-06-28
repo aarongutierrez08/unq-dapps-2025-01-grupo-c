@@ -6,8 +6,8 @@ import com.example.unq_dapps_2025_01_grupo_c.model.external.Match
 import com.example.unq_dapps_2025_01_grupo_c.model.external.Team
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.PlayerNotFoundException
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.TeamNotFoundException
-import com.example.unq_dapps_2025_01_grupo_c.service.external.FootballDataApiClient
-import com.example.unq_dapps_2025_01_grupo_c.service.predictor.MatchPredictor
+import com.example.unq_dapps_2025_01_grupo_c.external.FootballDataApiClient
+import com.example.unq_dapps_2025_01_grupo_c.component.MatchPredictor
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 

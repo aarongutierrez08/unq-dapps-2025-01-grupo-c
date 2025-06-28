@@ -1,5 +1,6 @@
 package com.example.unq_dapps_2025_01_grupo_c.service.predictor
 
+import com.example.unq_dapps_2025_01_grupo_c.component.MatchPredictor
 import com.example.unq_dapps_2025_01_grupo_c.dto.match.MatchPredictionResponse
 import com.example.unq_dapps_2025_01_grupo_c.model.external.*
 import org.junit.jupiter.api.Assertions.*

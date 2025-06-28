@@ -1,4 +1,4 @@
-package com.example.unq_dapps_2025_01_grupo_c.service.external
+package com.example.unq_dapps_2025_01_grupo_c.external
 
 import com.example.unq_dapps_2025_01_grupo_c.model.external.*
 import org.springframework.beans.factory.annotation.Value

@@ -1,3 +1,17 @@
+## Demo 3:
+
+### Core
+- [x] Crear un test de arquitectura
+- [x] Auditoria de Web-Services. Loguear <timestamp, user, operación/metodo, parámetros, tiempoDeEjecicion> de los servicios publicados con Spring utilizando Log4j/logback
+- [ ] TAG en GitHub y Confeccionar Release Notes de entrega 3 (https://drive.google.com/file/d/0BxyNm_rQ4Q8vZU52eF9QeXR4X3M/view?usp=sharing&resourcekey=0-v26hiy-2NSGhgdBnZ1KIbQ)
+- [x] Configurar https://www.baeldung.com/spring-boot-prometheus (Metricas)
+- [x] Configurar https://www.baeldung.com/spring-boot-actuators (Endpoints de Monitoreo)
+
+### Funcionalidad
+- [ ] Endpoint de métricas avanzadas
+- [ ] Endpoint de comparación de equipos
+
+------------------------------------------------------------
 ## Demo 2:
 
 ### Core

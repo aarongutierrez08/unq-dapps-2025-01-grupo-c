@@ -35,7 +35,6 @@ class TeamControllerTest {
         token = jwtUtil.generateToken("arito")
     }
 
-    @Tag("scrapping")
     @Test
     fun `should return players when authorized`() {
         val request = PlayerRequest(team = "Liverpool")
@@ -50,7 +49,6 @@ class TeamControllerTest {
         }
     }
 
-    @Tag("scrapping")
     @Test
     fun `should return 404 when team is invalid`() {
         val request = PlayerRequest(team = "InvalidTeam")
@@ -65,7 +63,6 @@ class TeamControllerTest {
         }
     }
 
-    @Tag("scrapping")
     @Test
     fun `should return 401 when token is missing`() {
         val request = PlayerRequest(team = "Liverpool")

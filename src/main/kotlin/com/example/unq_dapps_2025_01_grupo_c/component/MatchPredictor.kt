@@ -1,13 +1,13 @@
-package com.example.unq_dapps_2025_01_grupo_c.service.predictor
+package com.example.unq_dapps_2025_01_grupo_c.component
 
 import com.example.unq_dapps_2025_01_grupo_c.dto.match.ExpectedScore
 import com.example.unq_dapps_2025_01_grupo_c.dto.match.HistoricalResult
 import com.example.unq_dapps_2025_01_grupo_c.dto.match.MatchPredictionResponse
 import com.example.unq_dapps_2025_01_grupo_c.model.external.*
-import org.springframework.stereotype.Service
+import org.springframework.stereotype.Component
 import kotlin.math.*
 
-@Service
+@Component
 class MatchPredictor {
 
     fun predictMatch(previousMatches: List<Match>, teamNameOne: String, teamNameTwo: String): MatchPredictionResponse {
