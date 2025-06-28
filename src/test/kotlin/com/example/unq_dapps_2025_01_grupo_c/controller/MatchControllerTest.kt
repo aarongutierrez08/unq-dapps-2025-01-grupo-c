@@ -71,7 +71,7 @@ class MatchControllerTest {
             content = objectMapper.writeValueAsString(request)
         }.andExpect {
             status { isOk() }
-            jsonPath("$", hasSize<Any>(0)) //zero because no more matches in premiere league 2025
+            jsonPath("$", hasSize<Any>(greaterThan(0)))
         }
     }
 

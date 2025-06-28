@@ -2,10 +2,7 @@ package com.example.unq_dapps_2025_01_grupo_c.controller
 
 import com.example.unq_dapps_2025_01_grupo_c.dto.query_history.QueryHistoryResponse
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
-import com.example.unq_dapps_2025_01_grupo_c.exceptions.UserNotFoundException
-import com.example.unq_dapps_2025_01_grupo_c.model.query_history.toResponseList
-import com.example.unq_dapps_2025_01_grupo_c.repository.QueryHistoryRepository
-import com.example.unq_dapps_2025_01_grupo_c.repository.UserRepository
+import com.example.unq_dapps_2025_01_grupo_c.service.QueryHistoryService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.Schema
@@ -22,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/history")
 @Tag(name = "QueryHistory", description = "Endpoints for logged user queries history")
 class QueryHistoryController (
-    private val queryHistoryRepository: QueryHistoryRepository,
-    private val userRepository: UserRepository
+    private val queryHistoryService: QueryHistoryService
 ) {
     @Operation(
         summary = "Get user queries history",
@@ -42,13 +38,7 @@ class QueryHistoryController (
     @GetMapping("")
     fun getQueryHistory(): ResponseEntity<List<QueryHistoryResponse>> {
         val username = SecurityContextHolder.getContext().authentication.name
-        val userId = userRepository.findByUsername(username)
-            .orElseThrow { UserNotFoundException(username) }
-            .id
-
-        val queriesHistory = queryHistoryRepository.findAllByUserId(userId)
-
-        return ResponseEntity.ok(queriesHistory.toResponseList())
+        val queriesHistory = queryHistoryService.getUserQueryHistory(username)
+        return ResponseEntity.ok(queriesHistory)
     }
 }
-
