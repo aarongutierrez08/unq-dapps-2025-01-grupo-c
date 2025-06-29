@@ -47,6 +47,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
 	implementation("io.micrometer:micrometer-registry-prometheus")
 	implementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
+	implementation("io.micrometer:micrometer-core")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
