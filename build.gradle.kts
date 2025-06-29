@@ -1,3 +1,12 @@
+val jacocoToolVersion = "0.8.13"
+val jjwtVersion = "0.11.5"
+val springdocVersion = "2.8.6"
+val seleniumVersion = "4.33.0"
+val mockitoKotlinVersion = "5.4.0"
+val hsqldbVersion = "2.7.4"
+val okhttpMockWebServerVersion = "4.12.0"
+val archunitVersion = "1.4.1"
+
 plugins {
 	kotlin("jvm") version "1.9.25"
 	kotlin("plugin.spring") version "1.9.25"
@@ -34,22 +43,22 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
+	implementation("io.jsonwebtoken:jjwt-api:$jjwtVersion")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
 	implementation("io.micrometer:micrometer-registry-prometheus")
-	implementation("org.seleniumhq.selenium:selenium-java:4.33.0")
+	implementation("org.seleniumhq.selenium:selenium-java:$seleniumVersion")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
-	testImplementation("org.hsqldb:hsqldb:2.7.4")
-	testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
-	testImplementation("com.tngtech.archunit:archunit-junit5:1.4.1")
+	testImplementation("org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion")
+	testImplementation("org.hsqldb:hsqldb:$hsqldbVersion")
+	testImplementation("com.squareup.okhttp3:mockwebserver:$okhttpMockWebServerVersion")
+	testImplementation("com.tngtech.archunit:archunit-junit5:$archunitVersion")
 
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
-	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
+	runtimeOnly("io.jsonwebtoken:jjwt-impl:$jjwtVersion")
+	runtimeOnly("io.jsonwebtoken:jjwt-jackson:$jjwtVersion")
 	runtimeOnly("org.postgresql:postgresql")
 }
 
@@ -76,18 +85,18 @@ sonar {
             **/repository/**,
             **/security/**,
             **/controller/PlayerController**,
-			"**/service/WhoScoredService**",
+            **/service/WhoScoredService**,
             **/ApplicationKt.class,
             com/example/unq_dapps_2025_01_grupo_c/*.class,
-			**/TeamControllerTest,
-			**/WhoScoredTest,
+            **/TeamControllerTest,
+            **/WhoScoredTest,
             """.trimIndent().replace("\n", ",")
 		)
 	}
 }
 
 jacoco {
-	toolVersion = "0.8.13"
+	toolVersion = jacocoToolVersion
 }
 
 tasks.jacocoTestReport {
@@ -102,7 +111,6 @@ tasks.test {
 tasks.sonar {
 	dependsOn(tasks.jacocoTestReport)
 }
-
 
 tasks.jacocoTestReport {
 	dependsOn(tasks.test)

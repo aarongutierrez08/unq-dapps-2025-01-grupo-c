@@ -22,6 +22,7 @@ class WhoScoredService {
     val teamLinkClassName = "team-link"
     val standingsClassName = "standings"
     val playersTableId = "player-table-statistics-body"
+    val baseUrl = "https://es.whoscored.com"
 
     fun createDriver(): WebDriver {
         val options = ChromeOptions().apply {
@@ -41,7 +42,6 @@ class WhoScoredService {
 
     fun fetchPlayers(teamName: String): List<String> {
         val driver: WebDriver = createDriver()
-        val baseUrl = "https://es.whoscored.com"
 
         driver.get("$baseUrl/regions/252/tournaments/2/inglaterra-premier-league")
         val wait = WebDriverWait(driver, Duration.ofSeconds(120))
@@ -70,7 +70,6 @@ class WhoScoredService {
 
     fun getPlayerPerformance(playerName: String, playerTeamName: String): PositionRating {
         val driver: WebDriver = createDriver()
-        val baseUrl = "https://es.whoscored.com"
 
         driver.get("$baseUrl/regions/252/tournaments/2/inglaterra-premier-league")
         val wait = WebDriverWait(driver, Duration.ofSeconds(120))
@@ -130,7 +129,6 @@ class WhoScoredService {
 
     fun fetchTeamsStats(teamNameOne: String, teamNameTwo: String): Pair<Map<String, String>, Map<String, String>> {
         val driver: WebDriver = createDriver()
-        val baseUrl = "https://es.whoscored.com"
         val wait = WebDriverWait(driver, Duration.ofSeconds(120))
 
         try {
@@ -194,7 +192,6 @@ class WhoScoredService {
 
     fun fetchAdvancedMetrics(teamName: String): AdvancedMetricsResponse {
         val driver = createDriver()
-        val baseUrl = "https://es.whoscored.com"
         val wait = WebDriverWait(driver, Duration.ofSeconds(120))
         try {
             driver.get("$baseUrl/regions/252/tournaments/2/inglaterra-premier-league")
