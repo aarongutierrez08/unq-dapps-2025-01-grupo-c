@@ -3,6 +3,7 @@ package com.example.unq_dapps_2025_01_grupo_c.controller
 import com.example.unq_dapps_2025_01_grupo_c.dto.player.PlayerRequest
 import com.example.unq_dapps_2025_01_grupo_c.exceptions.ApiErrorResponse
 import com.example.unq_dapps_2025_01_grupo_c.service.WhoScoredService
+import io.micrometer.core.instrument.MeterRegistry
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*
 @Tag(name = "Teams", description = "Information about football teams")
 class TeamController(
     private val whoScoredService: WhoScoredService,
+    private val meterRegistry: MeterRegistry
 ) {
 
     @Operation(
@@ -41,6 +43,9 @@ class TeamController(
         @Parameter(description = "Player request containing team information", required = true)
         @Valid @RequestBody request: PlayerRequest
     ): ResponseEntity<List<String>> {
+        meterRegistry
+            .counter("app_teams_queries_total", "team", request.team)
+            .increment()
         return ResponseEntity.ok(whoScoredService.fetchPlayers(request.team))
     }
 }
